@@ -91,4 +91,25 @@ router.delete("/deletenote/:id", fetchUser, async (req, res) => {
   }
 });
 
+// Route 5: Get all the Sections using : GET "/api/notes/getSections"
+router.get("/getSections", fetchUser, async (req, res) => {
+  try {
+    const note = await Note.find({ user: req.user.id }).distinct("tag");
+    res.json(note);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+// Route 6: Get all the notes of a particular tag using : GET "/api/notes/fetchallnotes/:tag"
+router.get("/fetchalltagnote/:tag", fetchUser, async (req, res) => {
+  try {
+    const note = await Note.find({ user: req.user.id ,tag:req.params.tag});
+    res.json(note);
+  } catch (error) {
+    res.json(error);
+  }
+});
+
+
 module.exports = router;

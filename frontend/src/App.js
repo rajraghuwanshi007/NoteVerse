@@ -7,6 +7,8 @@ import NoteState from "./Context/notes/NoteState";
 import Signup from "./components/Signup.js";
 import Login from "./components/Login.js";
 import Alert from "./components/Alert.js";
+import Section from "./components/Section.js";
+import TagFetch from "./components/TagFetch.js";
 
 function App() {
   
@@ -19,7 +21,9 @@ function App() {
           <div className="container">
             <Routes>
               <Route exact path="/" element={<Home />} />
+              <Route exact path="/section" element={<Section />} />
               <Route exact path="/about" element={<About />} />
+              <Route exact path="/fetch/:tag" element={<TagFetch/>} />
               <Route
                 exact
                 path="/login"
