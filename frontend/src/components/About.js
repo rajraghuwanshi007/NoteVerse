@@ -4,18 +4,8 @@ const About = () => {
   return (
     <div className="container">
       <h1>This is about page</h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat ab
-        harum dolorum aliquid, quae non suscipit, voluptatem quidem assumenda
-        reprehenderit reiciendis officiis, saepe earum corrupti velit error
-        sapiente officia? Veritatis perferendis earum asperiores fuga, voluptas
-        est non delectus recusandae repellat natus doloribus soluta fugit maxime
-        atque ratione sed provident commodi autem in a quo minima cupiditate
-        eveniet. Iusto placeat in voluptatum illum recusandae voluptas illo?
-        Numquam iusto nostrum recusandae ea libero fugiat! Nulla dolores
-        perferendis repudiandae alias repellat sint libero eius, delectus hic
-        ullam. Itaque libero vel ea reprehenderit quam praesentium dolor, alias
-        dolorum aperiam animi quos pariatur perferendis repudiandae.
+      <p className="mt-3">
+      <strong>iNotes</strong> is a cutting-edge note-making web application designed to enhance productivity and streamline your digital note-taking experience. Whether you're a student, professional, or simply an organized individual, iNotes offers a range of features and functionalities to help you capture, organize, and access your notes effortlessly. With its intuitive user interface and robust set of tools, iNotes is poised to become your go-to note-making companion.
       </p>
     </div>
   );

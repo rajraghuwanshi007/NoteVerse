@@ -9,7 +9,7 @@ export default function Login() {
     email: "",
     password: "",
   });
-  const { showAlert, setUser, loading } = useContext(NoteContext);
+  const { showAlert, setUser, loading, getUser } = useContext(NoteContext);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -26,7 +26,7 @@ export default function Login() {
       if (json.Success) {
         localStorage.setItem("token", json.authtoken);
         showAlert("Logged in Successfully", "success");
-        setUser(data.email);
+        setUser(()=>getUser());
         navigate("/");
       } else {
         showAlert("Incorrect Credentials", "danger");

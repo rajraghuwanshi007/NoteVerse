@@ -274,9 +274,9 @@ const NoteState = (props) => {
       });
       if (response.status === 200) {
         const json = await response.json();
-        setUser(() => json.user.email);
+        setUser(() => json.user.name);
         setLoading(false);
-        return json.user.email;
+        return json.user.name;
       } else {
         setUser(() => "");
         setLoading(false);

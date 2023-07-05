@@ -53,8 +53,8 @@ export default function TagNotes(props) {
       <button
         type="button"
         className="btn btn-primary d-none"
-        data-toggle="modal"
-        data-target="#exampleModal"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
         ref={ref}
       >
         Launch demo modal
@@ -75,7 +75,7 @@ export default function TagNotes(props) {
               <button
                 type="button"
                 className="close"
-                data-dismiss="modal"
+                data-bs-dismiss="modal"
                 aria-label="Close"
                 ref={closeRef}
               >
@@ -139,7 +139,7 @@ export default function TagNotes(props) {
               <button
                 type="button"
                 className="btn btn-secondary"
-                data-dismiss="modal"
+                data-bs-dismiss="modal"
               >
                 Close
               </button>

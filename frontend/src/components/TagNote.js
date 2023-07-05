@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import NoteContext from "../Context/notes/NoteContext";
 import Spinner from "./Spinner";
 
-export default function NoteItem(props) {
+export default function TagNote(props) {
   const context = useContext(NoteContext);
   const { deleteTagNote, loading } = context;
   const { note, updateNote } = props;
