@@ -79,11 +79,11 @@ const Navbar = () => {
             </form>
           ) : (
             <form className="d-flex">
-              <Link className="btn btn-primary mx-1" to="/login" role="button">
-                Login
+              <Link className="btn btn-outline-info mx-1" to="/login" role="button">
+                Sign In
               </Link>
-              <Link className="btn btn-primary mx-1" to="/signup" role="button">
-                Signup
+              <Link className="btn btn-outline-info mx-1" to="/signup" role="button">
+                Sign Up
               </Link>
             </form>
           )}

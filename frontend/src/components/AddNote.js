@@ -28,67 +28,34 @@ export default function AddNote() {
   };
   if (loading) return <Spinner />;
   return (
-    <div className="container my-3">
-      <h1>Add a note</h1>
-      <form className="container">
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            name="title"
-            value={note.title}
-            onChange={handleChange}
-            required
-            minLength={3}
-          />
-          <div id="titleHelp" className="form-text">
-            Minimum 3 characters long
-          </div>
+    <div className="container w-50 card border-dark mb-3">
+    <form className="form-signin">
+      <div className="text-center mb-4">
+        <h1 className="h3 mb-3 font-weight-normal card-body text-dark">Add a Note</h1>
+      </div>
+  
+      <div className="form-label-group">
+        <input type="text" id="title" name="title" className="form-control" placeholder="title" value={note.title}  onChange={handleChange} required minLength={3} autoFocus />
+        <label htmlFor="title">Title</label>
+        <div id="titleHelp" className="form-text">
+          Minimum 3 characters long
         </div>
-        <div className="form-group">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <textarea
-            className="form-control"
-            id="description"
-            rows="3"
-            name="description"
-            value={note.description}
-            onChange={handleChange}
-            required
-            minLength={5}
-          ></textarea>
-          <div id="descriptionHelp" className="form-text">
-            Minimum 5 characters long
-          </div>
+      </div>
+  
+      <div className="form-label-group">
+        <textarea type="text" name="description" id="Description" className="form-control" placeholder="Description"  value={note.description}  onChange={handleChange}  required  minLength={5}/>
+        <div id="descriptionHelp" className="form-text">
+          Minimum 5 characters long
         </div>
-        <div className="mb-3">
-          <label htmlFor="tag" className="form-label">
-            Tag
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="tag"
-            value={note.tag}
-            name="tag"
-            onChange={handleChange}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={note.title.length < 3 || note.description.length < 5}
-          className="btn btn-primary"
-          onClick={handleClick}
-        >
-          Submit
-        </button>
-      </form>
+      </div>
+      <div className="form-label-group">
+        <input type="text" name="tag" id="tag" className="form-control" placeholder="tag"  value={note.tag}  onChange={handleChange} />
+        <label htmlFor="tag">Tag</label>
+      </div>
+      <div className="text-center"><button disabled={note.title.length < 3 || note.description.length < 5} className="btn btn-lg btn-primary btn-block" type="submit" onClick={handleClick}>Add</button></div>
+    </form>
     </div>
   );
 }
+
+

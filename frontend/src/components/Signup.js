@@ -45,49 +45,26 @@ export default function Signup() {
   };
   if (loading) return <Spinner />;
   return (
-    <form className="container my-1">
-      <h1>Signup to iNotes</h1>
-      <div className="form-group my-2">
-        <label htmlFor="exampleInputName1">Name</label>
-        <input
-          type="name"
-          name="name"
-          className="form-control"
-          id="exampleInputName1"
-          aria-describedby="emailHelp"
-          placeholder="Enter name"
-          onChange={handleChange}
-          value={data.name}
-        />
+    <div className="container w-50 card border-dark mb-3">
+    <form class="form-signin">
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal card-body text-dark">Login to iNotes</h1>
       </div>
-      <div className="form-group my-2">
-        <label htmlFor="exampleInputEmail1">Email address</label>
-        <input
-          type="email"
-          name="email"
-          className="form-control"
-          id="exampleInputEmail1"
-          aria-describedby="emailHelp"
-          placeholder="Enter email"
-          onChange={handleChange}
-          value={data.email}
-        />
+      <div class="form-label-group">
+        <input type="name" id="inputName" name="name" className="form-control" placeholder="Name" onChange={handleChange} value={data.name} required autoFocus />
+        <label htmlFor="inputName">Name</label>
       </div>
-      <div className="form-group my-2">
-        <label htmlFor="exampleInputPassword1">Password</label>
-        <input
-          type="password"
-          name="password"
-          className="form-control"
-          id="exampleInputPassword1"
-          placeholder="Password"
-          onChange={handleChange}
-          value={data.password}
-        />
+      <div class="form-label-group">
+        <input type="email" id="inputEmail" name="email" className="form-control" placeholder="Email address" onChange={handleChange} value={data.email} required autoFocus />
+        <label htmlFor="inputEmail">Email address</label>
       </div>
-      <button type="submit" className="btn btn-primary" onClick={handleSubmit}>
-        Submit
-      </button>
+  
+      <div class="form-label-group">
+        <input type="password" name="password" id="inputPassword" className="form-control" placeholder="Password" onChange={handleChange} value={data.password} required/>
+        <label htmlFor="inputPassword">Password</label>
+      </div>
+      <div className="text-center"><button className="btn btn-lg btn-outline-primary btn-block" type="submit" onClick={handleSubmit}>Sign Up</button></div>
     </form>
+    </div>
   );
 }

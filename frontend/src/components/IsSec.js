@@ -8,10 +8,11 @@ const Home = () => {
     return (
       <>
         <div className="mt-5">
-          {!loading && <h3 >Click to categorise your Notes by tags <span style={{margin:"5%"}}><Link className=" btn btn-outline-primary" to="/section">Click here</Link></span></h3>}
+          {!loading &&   <div className="card border-dark mb-3" ><div className="card-body text-dark"><h3 >Click to categorise your Notes by tags <span ><Link className=" btn btn-outline-primary" style={{float: "right"  }} to="/section">Click here</Link></span></h3></div></div>}
         </div>
       </>
     );
   };
   export default Home;
   
+
