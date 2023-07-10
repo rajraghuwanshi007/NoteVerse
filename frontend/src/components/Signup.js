@@ -48,7 +48,7 @@ export default function Signup() {
     <div className="container w-50 card border-dark mb-3">
     <form class="form-signin">
       <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal card-body text-dark">Login to iNotes</h1>
+        <h1 class="h3 mb-3 font-weight-normal card-body text-dark">Login to NoteVerse</h1>
       </div>
       <div class="form-label-group">
         <input type="name" id="inputName" name="name" className="form-control" placeholder="Name" onChange={handleChange} value={data.name} required autoFocus />

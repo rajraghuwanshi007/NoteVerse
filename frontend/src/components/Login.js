@@ -46,7 +46,7 @@ export default function Login() {
     <div className="container w-50 card border-dark mb-3">
     <form className="form-signin">
       <div className="text-center mb-4">
-        <h1 className="h3 mb-3 font-weight-normal card-body text-dark">Login to iNotes</h1>
+        <h1 className="h3 mb-3 font-weight-normal card-body text-dark">Login to NoteVerse</h1>
       </div>
 
       <div className="form-label-group">
