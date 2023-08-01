@@ -26,7 +26,8 @@ export default function Login() {
       if (json.Success) {
         localStorage.setItem("token", json.authtoken);
         showAlert("Logged in Successfully", "success");
-        setUser(()=>getUser());
+        let name = getUser();
+        setUser(()=>name);
         navigate("/");
       } else {
         showAlert("Incorrect Credentials", "danger");
