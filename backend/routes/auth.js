@@ -111,7 +111,7 @@ router.get("/getuser", fetchUser, async (req, res) => {
 });
 
 
-// Route 3 : sent friend request to a user using POST "/api/auth/sendReq".
+// Route 4 : sent friend request to a user using POST "/api/auth/sendReq".
 router.put("/sendReq", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
@@ -145,7 +145,7 @@ router.put("/sendReq", fetchUser, async (req, res) => {
   }
 });
 
-// Route 3 : delete friend request to a user using POST "/api/auth/delReq".
+// Route 5 : delete friend request to a user using POST "/api/auth/delReq".
 router.put("/delReq", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
@@ -165,7 +165,7 @@ router.put("/delReq", fetchUser, async (req, res) => {
   }
 });
 
-// Route 3 : Show all sent friend request to a user using POST "/api/auth/showSentReq".
+// Route 6 : Show all sent friend request to a user using POST "/api/auth/showSentReq".
 router.get("/showSentReq", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
@@ -179,7 +179,7 @@ router.get("/showSentReq", fetchUser, async (req, res) => {
 });
 
 
-// Route 3 : Show all recieved friend request to a user using POST "/api/auth/showRecReq".
+// Route 7 : Show all recieved friend request to a user using POST "/api/auth/showRecReq".
 router.get("/showRecReq", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
