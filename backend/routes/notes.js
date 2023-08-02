@@ -64,7 +64,7 @@ router.put(
         { _id: req.params.id, user: req.user.id },
         { $set: { title, description, tag } },
         // new: true returns the document after update was applied.
-        // new: true returns the document before update was applied.
+        // new: false returns the document before update was applied.
         { new: true }
       );
       if (!note) {

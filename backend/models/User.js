@@ -19,6 +19,15 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  sent: {
+    type: Array,
+  },
+  recieve: {
+    type: Array,
+  },
+  friends: {
+    type: Array,
+  },
 });
 
 // Mongoose automatically looks for the plural, lowercased version of your model name so user will be for users collections in db.

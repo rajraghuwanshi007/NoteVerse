@@ -37,6 +37,9 @@ router.post(
         name: req.body.name,
         password: secPass,
         email: req.body.email,
+        sent:[],
+        recieve:[],
+        friends: [],
       });
 
       const data = {
@@ -99,11 +102,94 @@ router.post(
 router.get("/getuser", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
-    const user = await User.findById(userId).select("-password"); // selects everything except the password.
+    const user = await User.findById(userId).select("-password -friends -sent -recieve"); // selects everything except the password.
     res.json({ Success: "true", user });
   } catch (error) {
     // console.log(error.message);
     res.status(500).send("Internal Server Error");
   }
 });
+
+
+// Route 3 : sent friend request to a user using POST "/api/auth/sendReq".
+router.put("/sendReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    let userEmail= req.body.email;
+    const sendingUser = await User.findById(userId).select("email name sent"); // selects name and email.
+    let sending={email:sendingUser.email,name:sendingUser.name};
+    if(sending.email===userEmail){
+      return res.status(400).json({ error: "Enter valid email" });
+    }
+    const sendingToUser = await User.findOne({email:userEmail}).select("name"); // selects name and email.
+    if(!sendingToUser){
+      return res.status(400).json({ error: "User does not exist" });
+    }
+    let sendingTo={email:userEmail,name:sendingToUser.name};
+
+    const found = sendingUser.sent.some(el => el.email === userEmail)
+    if(found){
+      return res.status(400).json({ error: "Already sent" });
+    }
+        
+    const user = await User.findByIdAndUpdate(userId,
+      { $push: { sent : sendingTo } },
+      { new:true } ); 
+    const user2 = await User.findOneAndUpdate({email: userEmail},
+      { $push: { recieve : sending } },
+      { new:true } ); 
+    res.json({ Success: "true", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 3 : delete friend request to a user using POST "/api/auth/delReq".
+router.put("/delReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    let userEmail= req.body.email;
+    const recievingUser = await User.findById(userId).select("email"); // selects name and email.
+        
+    const user = await User.findByIdAndUpdate(userId,
+      { $pull: { recieve : {email: userEmail} } },
+      { new:true } ); 
+    const user2 = await User.findOneAndUpdate({email: userEmail},
+      { $pull: { sent : {email: recievingUser.email} } },
+      { new:true } ); 
+    res.json({ Success: "true", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 3 : Show all sent friend request to a user using POST "/api/auth/showSentReq".
+router.get("/showSentReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    const recievingUser = await User.findById(userId).select("sent"); // selects name and email.
+    let user= recievingUser.sent
+    res.json({ Success: "true", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+
+// Route 3 : Show all recieved friend request to a user using POST "/api/auth/showRecReq".
+router.get("/showRecReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    const recievingUser = await User.findById(userId).select("recieve"); // selects name and email.
+    let user= recievingUser.recieve
+    res.json({ Success: "true", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;
