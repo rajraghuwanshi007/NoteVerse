@@ -138,7 +138,8 @@ router.put("/sendReq", fetchUser, async (req, res) => {
     const user2 = await User.findOneAndUpdate({email: userEmail},
       { $push: { recieve : sending } },
       { new:true } ); 
-    res.json({ Success: "true", user });
+      let Sent= user.sent;
+    res.json({ Success: "true", Sent });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -158,7 +159,8 @@ router.put("/delReq", fetchUser, async (req, res) => {
     const user2 = await User.findOneAndUpdate({email: userEmail},
       { $pull: { sent : {email: recievingUser.email} } },
       { new:true } ); 
-    res.json({ Success: "true", user });
+      let Rec=user.recieve;
+    res.json({ Success: "true", Rec });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -185,6 +187,47 @@ router.get("/showRecReq", fetchUser, async (req, res) => {
     let userId = req.user.id;
     const recievingUser = await User.findById(userId).select("recieve"); // selects name and email.
     let user= recievingUser.recieve
+    res.json({ Success: "true", user });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 8 : Accept friend request to a user using POST "/api/auth/accReq".
+router.put("/accReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    let userEmail= req.body.email;
+    let userName= req.body.name;
+    const recievingUser = await User.findById(userId).select("email name sent"); // selects name and email.
+    
+    let sendingTo={email:userEmail,name:userName};
+    const found = recievingUser.sent.some(el => el.email === userEmail)
+    if(!found){
+      return res.status(400).json({ error: "Request not found" });
+    }
+    const user = await User.findByIdAndUpdate(userId,
+      { $pull: { recieve : {email: userEmail} } ,$push: { friends : sendingTo }},
+      { new:true } ); 
+    const user2 = await User.findOneAndUpdate({email: userEmail},
+      { $pull: { sent : {email: recievingUser.email} } ,$push: { friends : {email: recievingUser.email,name: recievingUser.name}}},
+      { new:true } ); 
+
+      let Fri=user.friends;
+    res.json({ Success: "true", Fri });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 9 : Show all friends to a user using POST "/api/auth/showFriends".
+router.get("/showFriends", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    const recievingUser = await User.findById(userId).select("friends"); // selects name and email.
+    let user= recievingUser.friends
     res.json({ Success: "true", user });
   } catch (error) {
     console.log(error);
