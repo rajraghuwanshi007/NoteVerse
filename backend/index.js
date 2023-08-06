@@ -10,6 +10,7 @@ app.use(cors()); // Use this after the variable declaration
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth.js"));
+app.use("/api/shared", require("./routes/sharedNotes.js"));
 app.use("/api/notes", require("./routes/notes.js"));
 
 app.get("/", (req, res) => {

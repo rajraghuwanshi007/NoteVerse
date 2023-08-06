@@ -116,7 +116,7 @@ router.put("/sendReq", fetchUser, async (req, res) => {
   try {
     let userId = req.user.id;
     let userEmail= req.body.email;
-    const sendingUser = await User.findById(userId).select("email name sent"); // selects name and email.
+    const sendingUser = await User.findById(userId).select("email name sent friends"); // selects name and email.
     let sending={email:sendingUser.email,name:sendingUser.name};
     if(sending.email===userEmail){
       return res.status(400).json({ error: "Enter valid email" });
@@ -129,6 +129,10 @@ router.put("/sendReq", fetchUser, async (req, res) => {
 
     const found = sendingUser.sent.some(el => el.email === userEmail)
     if(found){
+      return res.status(400).json({ error: "Already sent" });
+    }
+    const foundFrnd = sendingUser.friends.some(el => el.email === userEmail)
+    if(foundFrnd){
       return res.status(400).json({ error: "Already sent" });
     }
         
@@ -152,7 +156,6 @@ router.put("/delReq", fetchUser, async (req, res) => {
     let userId = req.user.id;
     let userEmail= req.body.email;
     const recievingUser = await User.findById(userId).select("email"); // selects name and email.
-        
     const user = await User.findByIdAndUpdate(userId,
       { $pull: { recieve : {email: userEmail} } },
       { new:true } ); 
@@ -173,9 +176,8 @@ router.get("/showSentReq", fetchUser, async (req, res) => {
     let userId = req.user.id;
     const recievingUser = await User.findById(userId).select("sent"); // selects name and email.
     let user= recievingUser.sent
-    res.json({ Success: "true", user });
+    res.json( user );
   } catch (error) {
-    console.log(error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -187,9 +189,8 @@ router.get("/showRecReq", fetchUser, async (req, res) => {
     let userId = req.user.id;
     const recievingUser = await User.findById(userId).select("recieve"); // selects name and email.
     let user= recievingUser.recieve
-    res.json({ Success: "true", user });
+    res.json(user);
   } catch (error) {
-    console.log(error);
     res.status(500).send("Internal Server Error");
   }
 });
@@ -200,10 +201,10 @@ router.put("/accReq", fetchUser, async (req, res) => {
     let userId = req.user.id;
     let userEmail= req.body.email;
     let userName= req.body.name;
-    const recievingUser = await User.findById(userId).select("email name sent"); // selects name and email.
+    const recievingUser = await User.findById(userId).select("email name recieve"); // selects name and email.
     
     let sendingTo={email:userEmail,name:userName};
-    const found = recievingUser.sent.some(el => el.email === userEmail)
+    const found = recievingUser.recieve.some(el => el.email === userEmail)
     if(!found){
       return res.status(400).json({ error: "Request not found" });
     }
@@ -214,8 +215,9 @@ router.put("/accReq", fetchUser, async (req, res) => {
       { $pull: { sent : {email: recievingUser.email} } ,$push: { friends : {email: recievingUser.email,name: recievingUser.name}}},
       { new:true } ); 
 
-      let Fri=user.friends;
-    res.json({ Success: "true", Fri });
+      // let Fri=user.friends;
+      let rec=user.recieve;
+    res.json({ Success: "true", rec });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");
@@ -228,7 +230,47 @@ router.get("/showFriends", fetchUser, async (req, res) => {
     let userId = req.user.id;
     const recievingUser = await User.findById(userId).select("friends"); // selects name and email.
     let user= recievingUser.friends
-    res.json({ Success: "true", user });
+    res.json(  user );
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 10 : delete friend request to a user using POST "/api/auth/delReq".
+router.put("/delSentReq", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    let userEmail= req.body.email;
+    const recievingUser = await User.findById(userId).select("email"); // selects name and email.
+    const user = await User.findByIdAndUpdate(userId,
+      { $pull: { sent : {email: userEmail} } },
+      { new:true } ); 
+    const user2 = await User.findOneAndUpdate({email: userEmail},
+      { $pull: { recieve : {email: recievingUser.email} } },
+      { new:true } ); 
+      let sent=user.sent;
+    res.json({ Success: "true", sent });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Route 11 : delete friend request to a user using POST "/api/auth/delReq".
+router.put("/delFrnd", fetchUser, async (req, res) => {
+  try {
+    let userId = req.user.id;
+    let userEmail= req.body.email;
+    const recievingUser = await User.findById(userId).select("email"); // selects name and email.
+    const user = await User.findByIdAndUpdate(userId,
+      { $pull: { friends : {email: userEmail} } },
+      { new:true } ); 
+    const user2 = await User.findOneAndUpdate({email: userEmail},
+      { $pull: { friends : {email: recievingUser.email} } },
+      { new:true } ); 
+      let friends=user.friends;
+    res.json({ Success: "true", friends });
   } catch (error) {
     console.log(error);
     res.status(500).send("Internal Server Error");

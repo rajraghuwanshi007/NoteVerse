@@ -48,7 +48,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-            <li className="nav-item">
+            <li className="nav-item mx-3">
               <Link
                 className={`nav-link ${
                   location.pathname === "/" ? "active" : ""
@@ -59,7 +59,38 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-3">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/fndReq" ? "active" : ""
+                }`}
+                aria-current="page"
+                to="fndReq"
+              >
+                Friend Requests
+              </Link>
+            </li><li className="nav-item mx-3">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/friends" ? "active" : ""
+                }`}
+                aria-current="page"
+                to="/friends"
+              >
+                Friends
+              </Link>
+            </li><li className="nav-item mx-3">
+              <Link
+                className={`nav-link ${
+                  location.pathname === "/shared" ? "active" : ""
+                }`}
+                aria-current="page"
+                to="/shared"
+              >
+                Shared Notes
+              </Link>
+            </li>
+            <li className="nav-item mx-3">
               <Link
                 className={`nav-link ${
                   location.pathname === "/about" ? "active" : ""

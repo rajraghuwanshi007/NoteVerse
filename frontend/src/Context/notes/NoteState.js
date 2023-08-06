@@ -4,10 +4,14 @@ const host = process.env.REACT_APP_HOST;
 
 const NoteState = (props) => {
   const [notes, setNotes] = useState([]);
+  const [sharedNotes, setSharedNotes] = useState([]);
   const [tagNotes, setTagNotes] = useState([]);
   const [sections, setSections] = useState([]);
   const [alert, setAlert] = useState(null);
   const [User, setUser] = useState("");
+  const [sentReq, setSentReq] = useState([]);
+  const [recReq, setRecReq] = useState([]);
+  const [friend, setFriend] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // get all notes
@@ -289,6 +293,282 @@ const NoteState = (props) => {
     }
   };
 
+// get all recieved friend request
+const getAllRec = async ()=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/showRecReq`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    if (response.status === 200) {
+      setRecReq(() => json);
+    } else {
+      setRecReq(() => []);
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// get all sent friend request
+const getAllSent = async ()=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/showSentReq`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    if (response.status === 200) {
+      setSentReq(() => json);
+    } else {
+      setSentReq(() => []);
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// Accept Friend request 
+const accReq=async (user)=>{
+  try {
+    setLoading(true);
+    const { name, email } = user;
+    const response = await fetch(`${host}/api/auth/accReq`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ name, email }), // body data type must match "Content-Type" header
+    });
+    let res = await response.json();
+    if (response.status === 200) {
+      setRecReq(res.rec);
+      showAlert("Added As Friend", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Delete Recieved Friend request 
+const delReq=async (email)=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/delReq`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ email }), // body data type must match "Content-Type" header
+    });
+    let res = await response.json();
+    if (response.status === 200) {
+      setRecReq(res.Rec);
+      showAlert(" Deleted Request", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Delete Sent Friend request 
+const delSentReq=async (email)=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/delSentReq`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ email }), // body data type must match "Content-Type" header
+    });
+    let res = await response.json();
+    if (response.status === 200) {
+      setSentReq(res.sent);
+      showAlert(" Deleted Request", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Send Friend request 
+const makeReq=async (email)=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/sendReq`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ email }), // body data type must match "Content-Type" header
+    });
+    let res = await response.json();
+    if (response.status === 200) {
+      setSentReq(res.Sent)
+      showAlert("Request Sent", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// get all friends
+const getAllFrnd = async ()=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/showFriends`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    if (response.status === 200) {
+      setFriend(() =>json);
+    } else {
+      setFriend(() => []);
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+// Delete Recieved Friend request 
+const delFrnd=async (email)=>{
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/auth/delFrnd`, {
+      method: "PUT", // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+      body: JSON.stringify({ email }), // body data type must match "Content-Type" header
+    });
+    let res = await response.json();
+    if (response.status === 200) {
+      setFriend(res.friends);
+      showAlert(" Removed Friend", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// get all notes
+const getAllSharedNotes = async () => {
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/shared/fetchallsharednotes`, {
+      method: "GET",
+      headers: {
+        "auth-token": localStorage.getItem("token"),
+        "Content-Type": "application/json",
+      },
+    });
+    const json = await response.json();
+    console.log(json);
+    if (response.status === 200) {
+      setSharedNotes(() => json);
+    } else {
+      setSharedNotes(() => []);
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};  
+
+  // add a shared note
+  const addSharedNote = async (note, to) => {
+    try {
+      setLoading(true);
+      const {title,description,tag}=note;
+      const newNote = {
+        title,
+        description,
+        tag,
+        to,
+      };
+      const response = await fetch(`${host}/api/shared/addsharednote`, {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+          "Content-Type": "application/json",
+          "auth-token": localStorage.getItem("token"),
+        },
+        body: JSON.stringify(newNote), // body data type must match "Content-Type" header
+      });
+      const temp = await response.json();
+      setSharedNotes((prev) => prev.concat(temp));
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+ // delete a shared note
+ const deleteSharedNote = async (id) => {
+  try {
+    setLoading(true);
+    const response = await fetch(`${host}/api/shared/deletesharednote/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": localStorage.getItem("token"),
+      },
+    });
+    if (response.status === 200) {
+      setSharedNotes((prev) => {
+        return prev.filter((note) => {
+          return note._id !== id;
+        });
+      });
+      showAlert("Deleted Successfully", "success");
+    } else {
+      showAlert("Operation Unsuccessful", "danger");
+    }
+    setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
   return (
     <NoteContext.Provider
       value={{
@@ -310,6 +590,21 @@ const NoteState = (props) => {
         editTagNote,
         deleteTagNote,
         addTagNote,
+        getAllSent,
+        getAllRec,
+        recReq,
+        sentReq,
+        accReq,
+        delReq,
+        makeReq,
+        delSentReq,
+        getAllFrnd,
+        friend,
+        delFrnd,
+        getAllSharedNotes,
+        sharedNotes,
+        addSharedNote,
+        deleteSharedNote,
       }}
     >
       {props.children}

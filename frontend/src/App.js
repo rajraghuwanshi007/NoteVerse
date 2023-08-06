@@ -9,6 +9,9 @@ import Login from "./components/Login.js";
 import Alert from "./components/Alert.js";
 import Section from "./components/Section.js";
 import TagFetch from "./components/TagFetch.js";
+import FndReq from "./components/FndReq.js";
+import Friends from "./components/Friends.js";
+import Shared from "./components/Shared.js";
 
 function App() {
   
@@ -33,6 +36,21 @@ function App() {
                 exact
                 path="/signup"
                 element={<Signup />}
+              />
+              <Route
+                exact
+                path="/fndReq"
+                element={<FndReq />}
+              />
+              <Route
+                exact
+                path="/friends"
+                element={<Friends />}
+              />
+              <Route
+                exact
+                path="/shared"
+                element={<Shared />}
               />
             </Routes>
           </div>
