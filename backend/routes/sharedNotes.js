@@ -54,9 +54,10 @@ router.post(
 // Route 3: Delete Note using : DELETE "/api/notes/update" - Login required
 router.delete("/deletesharednote/:id", fetchUser, async (req, res) => {
   try {
+    const email = await User.findById(userId).select("email"); // selects name and email.
     const note = await Note.findOneAndRemove({
       _id: req.params.id,
-      // user: req.user.id,
+      to: email.email,
     });
     if (!note) {
       res.status(401).json("Invalid request");

@@ -543,7 +543,7 @@ const getAllSharedNotes = async () => {
   };
 
  // delete a shared note
- const deleteSharedNote = async (id) => {
+ const deleteSharedNote = async (id,to) => {
   try {
     setLoading(true);
     const response = await fetch(`${host}/api/shared/deletesharednote/${id}`, {

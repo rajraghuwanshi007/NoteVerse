@@ -17,7 +17,7 @@ export default function NoteItem(props) {
           <i
               className="fa-solid fa-trash mx-2 mt-5"
               onClick={() => {
-                deleteSharedNote(note._id);
+                deleteSharedNote(note._id, note.to);
               }}
             ></i>
         </div>
