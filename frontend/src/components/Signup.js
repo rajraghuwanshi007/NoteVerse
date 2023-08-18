@@ -46,20 +46,20 @@ export default function Signup() {
   if (loading) return <Spinner />;
   return (
     <div className="container w-50 card border-dark mb-3">
-    <form class="form-signin">
-      <div class="text-center mb-4">
-        <h1 class="h3 mb-3 font-weight-normal card-body text-dark">Login to NoteVerse</h1>
+    <form className="form-signin">
+      <div className="text-center mb-4">
+        <h1 className="h3 mb-3 font-weight-normal card-body text-dark">Login to NoteVerse</h1>
       </div>
-      <div class="form-label-group">
+      <div className="form-label-group">
         <input type="name" id="inputName" name="name" className="form-control" placeholder="Name" onChange={handleChange} value={data.name} required autoFocus />
         <label htmlFor="inputName">Name</label>
       </div>
-      <div class="form-label-group">
+      <div className="form-label-group">
         <input type="email" id="inputEmail" name="email" className="form-control" placeholder="Email address" onChange={handleChange} value={data.email} required autoFocus />
         <label htmlFor="inputEmail">Email address</label>
       </div>
   
-      <div class="form-label-group">
+      <div className="form-label-group">
         <input type="password" name="password" id="inputPassword" className="form-control" placeholder="Password" onChange={handleChange} value={data.password} required/>
         <label htmlFor="inputPassword">Password</label>
       </div>

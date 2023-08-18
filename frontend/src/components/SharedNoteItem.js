@@ -25,7 +25,7 @@ export default function NoteItem(props) {
           <div className="card-body">
             <h5 className="card-title">Title:  {note.title}</h5>
             <p className="card-text">Description: {note.description}</p>
-            <p className="card-text"><small class="text-body-secondary">Tag: {note.tag}</small></p>
+            <p className="card-text"><small className="text-body-secondary">Tag: {note.tag}</small></p>
           </div>
         </div>
       </div>

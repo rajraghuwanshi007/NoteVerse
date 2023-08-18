@@ -503,7 +503,6 @@ const getAllSharedNotes = async () => {
       },
     });
     const json = await response.json();
-    console.log(json);
     if (response.status === 200) {
       setSharedNotes(() => json);
     } else {
