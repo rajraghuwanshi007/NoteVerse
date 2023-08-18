@@ -59,7 +59,7 @@ const Navbar = () => {
                 Home
               </Link>
             </li>
-            <li className="nav-item mx-3">
+            {localStorage.getItem("token")&&<li className="nav-item mx-3">
               <Link
                 className={`nav-link ${
                   location.pathname === "/fndReq" ? "active" : ""
@@ -69,7 +69,8 @@ const Navbar = () => {
               >
                 Friend Requests
               </Link>
-            </li><li className="nav-item mx-3">
+            </li>}
+            {localStorage.getItem("token")&&<li className="nav-item mx-3">
               <Link
                 className={`nav-link ${
                   location.pathname === "/friends" ? "active" : ""
@@ -79,7 +80,8 @@ const Navbar = () => {
               >
                 Friends
               </Link>
-            </li><li className="nav-item mx-3">
+            </li>}
+            {localStorage.getItem("token")&&<li className="nav-item mx-3">
               <Link
                 className={`nav-link ${
                   location.pathname === "/shared" ? "active" : ""
@@ -89,7 +91,7 @@ const Navbar = () => {
               >
                 Shared Notes
               </Link>
-            </li>
+            </li>}
             <li className="nav-item mx-3">
               <Link
                 className={`nav-link ${

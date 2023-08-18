@@ -62,7 +62,7 @@ router.delete("/deletesharednote/:id", fetchUser, async (req, res) => {
     });
     if (!note) {
       res.status(401).json("Invalid request");
-    } else res.json({ Success: "Note has been deleted", note });
+    } else res.json({ Success: "Note has been deleted" });
   } catch (error) {
     res.json({ error });
   }
